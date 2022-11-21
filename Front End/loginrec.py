@@ -6,14 +6,14 @@ cursor = st.session_state['cursor']
 
 def is_empty(df):
     if df.empty:
-        print('Empty table')
+        st.write('Empty table')
 
 def logrec():
     cursor.callproc('user_logins')
     result = ''
     for i in cursor.stored_results():
         result = i.fetchall()
-        df = pd.DataFrame(result)
-        is_empty(df)
-        st.write(df.to_markdown())
+    df = pd.DataFrame(result)
+    is_empty(df)
+    st.write(df.to_markdown())
 

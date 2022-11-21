@@ -28,26 +28,26 @@ def comm(msg,n):
         connection.commit()
 def fr_act():
     cursor.callproc('get_following_activity')
-    result = ''
+    resultfr = ''
     j=0
     for i in cursor.stored_results():
-        result = i.fetchall()
-        df = pd.DataFrame(result)
-        is_empty(df)
-        for i in tweets:
-            st.title(i[2])
-            st.header(i[3])
-            reply_msg=st.text_input("Comment on this",key="%sj+1"%(j))
-            j+=1
-            col1,col2=st.columns(2)
-            with col1:
-                if(st.button("Like",key="10%s"%(j))):
-                    like(i[0])
-            with col2:
-                if(st.button("Comment",key="20%s"%(j))):
-                    comm(reply_msg,i[0])
-            
-            st.write("---")
+        resultfr = i.fetchall()
+        df = pd.DataFrame(resultfr)
+    is_empty(df)
+    for i in resultfr:
+        st.title(i[2])
+        st.header(i[3])
+        reply_msg=st.text_input("Comment on this",key="%sj+1"%(j))
+        j+=1
+        col1,col2=st.columns(2)
+        with col1:
+            if(st.button("Like",key="10%s"%(j))):
+                like(i[0])
+        with col2:
+            if(st.button("Comment",key="20%s"%(j))):
+                comm(reply_msg,i[0])
+        
+        st.write("---")
 
 
     
@@ -64,7 +64,7 @@ def like(n):
 
 def is_empty(df):
     if df.empty:
-        print('Empty table')
+        st.write('Empty table')
 
 def tweet():
     arguments = []

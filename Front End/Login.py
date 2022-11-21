@@ -4,16 +4,41 @@ import datetime
 
 
 st.set_page_config(initial_sidebar_state="collapsed")
-connection = mysql.connector.connect(host='localhost', user = "root", password = "", db='twitter_ex')
+connection = mysql.connector.connect(host='localhost', user = "root", password = "", db='freeter')
 cursor = connection.cursor()  
 
+def add_bg_from_url():
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background-image: url("https://i.pinimg.com/originals/fa/40/5e/fa405e983146d7a786667978befa1f74.jpg");
+             background-attachment: fixed;
+             background-size: cover;
+             top:-50px;
+
+            #  opacity:0.5
+         }}
+         .css-af4qln span
+         {{
+            text-align:center;
+            font-size:100px;
+         }}
+         
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+
+add_bg_from_url() 
 
 result_log = ''
 col1, col2= st.columns(2)
 st.session_state['cursor'] = cursor
 st.session_state['connection'] = connection
 st.session_state['login'] ='None'
-st.session_state['expand']=False
+st.session_state['expand']=False 
+
 with col1:
     with st.expander("Login",expanded=st.session_state['expand']):
         arguments = []
@@ -42,8 +67,9 @@ with col1:
                 st.warning(result_log)
                 connection.rollback()
 if st.session_state['login']=="admin":
+    # if st.button("Show Login records"):
     from loginrec import logrec
-    if st.button("Show Login records"):
+    with st.expander("Show login records"):
         logrec()
 
 
@@ -94,3 +120,5 @@ with col2:
                 if result != 'Sorry, this username is already taken.':
                     st.success(result)
                     connection.commit()
+
+st.title('Freeter')
