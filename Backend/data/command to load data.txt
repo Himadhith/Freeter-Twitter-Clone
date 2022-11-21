@@ -1,0 +1,6 @@
+LOAD DATA INFILE 'C:/Users/Himadhith/Desktop/DBMS_project/Backend/data/users.csv'
+INTO TABLE users
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
